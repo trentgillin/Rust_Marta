@@ -1,4 +1,4 @@
-#[macro_use]
+#[macro_use] 
 extern crate serde;
 extern crate reqwest;
 extern crate serde_derive;
@@ -9,7 +9,7 @@ use structopt::StructOpt;
 #[derive(StructOpt, Debug)]
 #[structopt(name = "Rusty Marta", about = "A small CLI to pull MARTA bus data")]
 struct Opt {
-    /// bus number
+    // bus number
     #[structopt(short)]
     bus: String,
 }
@@ -29,12 +29,12 @@ fn main() -> Result<(), Error> {
     );
     let mut response = reqwest::get(&request_url)?;
     let bus: Vec<Bus> = response.json()?;
-    
+
     // handle buses with no times currently
     if bus.len() == 0 {
         println!("No times for bus: {}", opt.bus)
     } else {
-    println!("{:?}", bus);
+       println!("{:?}", bus);
     };
     Ok(())
 }
