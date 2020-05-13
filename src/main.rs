@@ -27,10 +27,14 @@ fn main() -> Result<(), Error> {
         "http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetBusByRoute/{}",
         opt.bus
     );
-
-    ///println!("{:?}", request_url);
     let mut response = reqwest::get(&request_url)?;
     let bus: Vec<Bus> = response.json()?;
+    
+    // handle buses with no times currently
+    if bus.len() == 0 {
+        println!("No times for bus: {}", opt.bus)
+    } else {
     println!("{:?}", bus);
+    };
     Ok(())
 }
