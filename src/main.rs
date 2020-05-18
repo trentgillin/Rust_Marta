@@ -1,4 +1,4 @@
-#[macro_use] 
+#[macro_use]
 extern crate serde;
 extern crate reqwest;
 extern crate serde_derive;
@@ -15,9 +15,10 @@ struct Opt {
 }
 
 #[derive(Deserialize, Debug)]
+#[serde(rename_all = "UPPERCASE")]
 struct Bus {
-    TIMEPOINT: String,
-    ADHERENCE: String,
+    timepoint: String,
+    adherence: String,
 }
 
 fn main() -> Result<(), Error> {
@@ -34,7 +35,7 @@ fn main() -> Result<(), Error> {
     if bus.len() == 0 {
         println!("No times for bus: {}", opt.bus)
     } else {
-       println!("{:?}", bus);
+        println!("{:?}", bus);
     };
     Ok(())
 }
