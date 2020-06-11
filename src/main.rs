@@ -1,9 +1,9 @@
-#[macro_use]
-extern crate serde;
 extern crate reqwest;
+extern crate serde;
 extern crate serde_derive;
 extern crate structopt;
 use reqwest::Error;
+use serde::Deserialize;
 use structopt::StructOpt;
 
 #[derive(StructOpt, Debug)]
@@ -19,6 +19,7 @@ struct Opt {
 struct Bus {
     timepoint: String,
     adherence: String,
+    vehicle: String,
 }
 
 fn main() -> Result<(), Error> {
@@ -28,7 +29,8 @@ fn main() -> Result<(), Error> {
         "http://developer.itsmarta.com/BRDRestService/RestBusRealTimeService/GetBusByRoute/{}",
         opt.bus
     );
-    let mut response = reqwest::get(&request_url)?;
+
+    let response = reqwest::blocking::get(&request_url)?;
     let bus: Vec<Bus> = response.json()?;
 
     // handle buses with no times currently
@@ -37,5 +39,6 @@ fn main() -> Result<(), Error> {
     } else {
         println!("{:?}", bus);
     };
+
     Ok(())
 }

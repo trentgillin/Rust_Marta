@@ -6,7 +6,7 @@ authors = ["trentgillin <trentgillin@gmail.com>"]
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
-reqwest = "0.9"
-serde = "1.0.106"
+reqwest = { version = "0.10", features = ["blocking", "json"] }
+serde = { version = "1.0", features = ["derive"] }
 serde_derive = "1.0.106"
 structopt = "0.3.14"
