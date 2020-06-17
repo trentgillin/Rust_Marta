@@ -5,6 +5,7 @@ extern crate structopt;
 use reqwest::Error;
 use serde::Deserialize;
 use structopt::StructOpt;
+use std::fmt;
 
 #[derive(StructOpt, Debug)]
 #[structopt(name = "Rusty Marta", about = "A small CLI to pull MARTA bus data")]
@@ -14,12 +15,18 @@ struct Opt {
     bus: String,
 }
 
-#[derive(Deserialize, Debug)]
+#[derive(Deserialize)]
 #[serde(rename_all = "UPPERCASE")]
 struct Bus {
     timepoint: String,
     adherence: String,
     vehicle: String,
+}
+
+impl fmt::Display for Bus{
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "Station: {} | Time Away: {} | Bus ID: {}", self.timepoint, self.adherence, self.vehicle)
+    }
 }
 
 fn main() -> Result<(), Error> {
@@ -37,8 +44,11 @@ fn main() -> Result<(), Error> {
     if bus.len() == 0 {
         println!("No times for bus: {}", opt.bus)
     } else {
-        println!("{:?}", bus);
+        println!("There are {} buses running", bus.len());
+        println!("=========================");
+        for i in bus {
+            println!("{}", i); 
+        }
     };
-
     Ok(())
 }
