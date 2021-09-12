@@ -63,9 +63,9 @@ fn main() -> Result<(), Error> {
         };
     } else {
         // Does the user have a Marta API Token stored in the environment variables
-        let test_token = env::var("MARTA_TOKEN").is_err();
+        let _test_token = env::var("MARTA_TOKEN").is_err();
 
-        let test_token = if test_token {
+        let _test_token = if _test_token {
             println!("You Need a MARTA API Token, you can get one at https://www.itsmarta.com/developer-reg-rtt.aspx");
             println!("Please enter your API Token or hit Ctrl+C to end the program:");
 
